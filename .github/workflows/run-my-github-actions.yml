@@ -38,15 +38,15 @@ jobs:
       - name: Checkout Spark repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
           repository: ${{ github.event.inputs.repo }}
           ref: ${{ github.event.inputs.branch }}
 
       - name: Set up buf
-        uses: bufbuild/buf-setup-action@v1.15.1
+        uses: bufbuild/buf-setup-action@v1.8.0
 
       - name: Build and push
         run: |
+          pip install mypy-protobuf==3.3.0 googleapis-common-protos-stubs==2.2.0 grpc-stubs==1.24.11 black==22.6.0
           dev/connect-gen-protos.sh
 
       - name: Upload test results to report
